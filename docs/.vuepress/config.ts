@@ -3,7 +3,7 @@ import { defineUserConfig } from 'vuepress'
 import { plumeTheme } from 'vuepress-theme-plume'
 
 export default defineUserConfig({
-  base: '/docs.oyyp.top/',
+  base: '/',
   lang: 'zh-CN',
   title: '我的学习笔记',
   description: '学习笔记',
