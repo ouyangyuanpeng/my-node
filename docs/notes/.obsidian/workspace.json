@@ -1,0 +1,243 @@
+{
+  "main": {
+    "id": "88cb5fba0203d8f8",
+    "type": "split",
+    "children": [
+      {
+        "id": "d8ae30a647b23177",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4d03c9639b3cb35c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "技术栈/消息队列/RocketMQ.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "RocketMQ"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4ffe94a37bf07dd2",
+    "type": "split",
+    "children": [
+      {
+        "id": "d7f678c5028fe7b6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "72353ccee8dfdebf",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "5a677ac1e1141466",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "f2a42c72550bc1aa",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "插件不再活动"
+            }
+          },
+          {
+            "id": "2245adbc78fa396a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 276
+  },
+  "right": {
+    "id": "e77a0a4167a5a561",
+    "type": "split",
+    "children": [
+      {
+        "id": "704ba7ac728f142f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5ac93f4e7097cc58",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "markdown语法.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "markdown语法 的反向链接列表"
+            }
+          },
+          {
+            "id": "5d41304d0fba0200",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "0272b6419046514c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "c6d89209d02292a5",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "技术栈/消息队列/RocketMQ.md"
+              },
+              "icon": "lucide-list",
+              "title": "RocketMQ 的大纲"
+            }
+          },
+          {
+            "id": "1774cc629cd7b35f",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 251.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "canvas:新建白板": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "4d03c9639b3cb35c",
+  "lastOpenFiles": [
+    "数据库/README.md",
+    "算法/README.md",
+    "算法/算法开始.md",
+    "网络/winserver+爱快+openwrt基于hyper-v.md",
+    "网络/README.md",
+    "微服务/README.md",
+    "微服务/ElasticSearch.md",
+    "系统部署/README.md",
+    "系统部署/Jenkins配置.md",
+    "系统部署/Drone.md",
+    "系统部署/豪车服务部署Docker配置.md",
+    "系统部署/部署遇到的问题.md",
+    "Docker/Docker容器部署.md",
+    "Docker/README.md",
+    "Linux/Ubuntu20安装.md",
+    "Linux/README.md",
+    "Linux/Linux命令.md",
+    "Linux/Debian12安装.md",
+    "markdown语法.md",
+    "技术栈/README.md",
+    "数据库/Mysql/Mysql学习.md",
+    "数据库/Mysql/Mysql锁.md",
+    "数据库/Mysql/MySql索引.md",
+    "数据库/Mysql/Mysql常用命令.md",
+    "数据库/Mysql/Mysql安装.md",
+    "技术栈/Typescript.md",
+    "开源框架/前端/img/Pasted image 20231017160909.png",
+    "开源框架/前端/img/Pasted image 20231017155733.png",
+    "算法/未命名.canvas",
+    "算法",
+    "img",
+    "技术栈/消息队列",
+    "未命名.canvas",
+    "Git",
+    "Docker",
+    "技术栈/SpringBoot",
+    "技术栈/Flutter",
+    "数据库/mysql-learning-notes/docs/mysql/MySQL是怎样运行的：从根儿上理解MySQL.ipynb",
+    "数据库/mysql-learning-notes/docs/mysql",
+    "数据库/mysql-learning-notes/docs/images/25-05.png",
+    "数据库/mysql-learning-notes/docs/images/25-04.png",
+    "数据库/mysql-learning-notes/docs/images/25-03.png",
+    "数据库/mysql-learning-notes/docs/images/25-02.png",
+    "数据库/mysql-learning-notes/docs/images/25-01.png",
+    "数据库/mysql-learning-notes/docs/images/24-11.png",
+    "数据库/mysql-learning-notes/docs/images/24-10.png",
+    "数据库/mysql-learning-notes/docs/images/24-09.png",
+    "数据库/mysql-learning-notes/docs/index.html",
+    "目录.canvas",
+    "文件/未命名.canvas",
+    "未命名 2.canvas",
+    "未命名 1.canvas"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "accentColor": "",
+  "theme": "moonstone",
+  "translucency": false,
+  "cssTheme": "Border",
+  "baseFontSize": 16,
+  "enabledCssSnippets": [
+    "【AnuPpuccin】浮动搜索栏",
+    "【AnuPpuccin】扩展的颜色方案",
+    "【AnuPpuccin】custom-rainbow-colors",
+    "【AnuPpuccin】its-frontmatter",
+    "【AnuPpuccin】notion-cards",
+    "【AnuPpuccin】minimal-cards",
+    "custom-background",
+    "custom-rainbow-colors",
+    "extended-colorschemes",
+    "floating-search-bar",
+    "floating-status-bar",
+    "its-frontmatter",
+    "minimal-cards",
+    "notion-cards"
+  ],
+  "monospaceFontFamily": "JetBrains Mono",
+  "nativeMenus": false
+}
