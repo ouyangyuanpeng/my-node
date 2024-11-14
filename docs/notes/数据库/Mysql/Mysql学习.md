@@ -3,9 +3,9 @@ title: Mysql学习
 createTime: 2024/11/14 10:21:26
 permalink: /数据库/iwmj8xcr/
 ---
-# InnoDB 记录结构
+## InnoDB 记录结构
 
-## COMPACT 行格式
+### COMPACT 行格式
 
 ​![4-1.png](https://image.oyyp.top/img/202409211657401.png)​
 

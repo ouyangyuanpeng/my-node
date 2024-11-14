@@ -3,7 +3,7 @@ title: Rust语法
 createTime: 2024/11/14 10:21:26
 permalink: /技术栈/m9ph5i95/
 ---
-# 声明变量类型
+## 声明变量类型
 
 Rust 是强类型语言，但具有自动判断变量类型的能力，rust 默认的变量值是不能修改的
 
@@ -144,7 +144,7 @@ fn main() {
 | 128 | i128 | u128 |
 | arch | isize | usize |
 
-# if while for
+## if while for
 
 ```rust
 fn main() {
@@ -183,7 +183,7 @@ fn main() {
 }
 ```
 
-# 结构体
+## 结构体
 
 类似于 java 里面的类
 
@@ -246,7 +246,7 @@ fn main() {
 
 ```
 
-# 错误处理
+## 错误处理
 
 Rust 有一套独特的处理异常情况的机制，它并不像其它语言中的 try 机制那样简单。
 
