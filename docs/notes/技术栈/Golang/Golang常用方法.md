@@ -3,6 +3,7 @@ title: Golang常用方法
 createTime: 2024/11/14 10:21:26
 permalink: /技术栈/c4ys7pu7/
 ---
+
 ## JSON 转换
 
 **结构体（Struct）到 JSON 字符串的转换：**
@@ -151,4 +152,66 @@ func main() {
 
 }
 
+```
+
+## http
+
+### 表单请求
+
+```go
+import ( "net/http"    "net/url" )
+
+// 定义请求的数据
+data := url.Values{
+    "operatoraccount": {*username},
+    "password":        {*password},
+}
+
+// 创建 POST 请求
+resp, err := http.PostForm("http://221.226.21.180/examinationRY/userLogin.action", data)
+if err != nil {
+    fmt.Println("Error sending request:", err)
+    return "", fmt.Errorf("Error sending request: %w", err)
+}
+
+defer resp.Body.Close()
+cookie := resp.Header.Get("Set-Cookie")
+jsessionid := strings.Split(cookie, ";")[0]
+return jsessionid, nil
+
+```
+
+### POST请求
+
+```go
+
+req, err := http.NewRequest("POST", "url", strings.NewReader(""))  
+if err != nil {  
+    fmt.Println("Error sending request:", err)  
+}  
+req.Header.Add("cookie", cookie)  
+// 构建请求客户端  
+client := &http.Client{  
+    Timeout: 20 * 1000 * 1000 * 1000, // 20 seconds  
+}  
+// 发送请求
+resp, err := client.Do(req)  
+  
+defer resp.Body.Close()  
+  
+// 读取响应体  
+responseData, err := io.ReadAll(resp.Body)  
+if err != nil {  
+    fmt.Println("Error reading response:", err)  
+    return nil  
+}  
+  
+// 解析 JSON 响应  
+var selectMenu SelectMenu  
+err = json.Unmarshal(responseData, &selectMenu)  
+if err != nil {  
+    fmt.Println("Error reading response:", err)  
+    return nil  
+}  
+  
 ```

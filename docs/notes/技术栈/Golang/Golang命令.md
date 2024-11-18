@@ -12,4 +12,33 @@ permalink: /技术栈/ff30cmcf/
 3. go mod tidy  //增加缺少的module，删除无用的module
 4. go mod vendor  //创建vendor目录，把项目依赖放入vendor目录
 5. go get "包地址" //引入第三方包
+
 ```
+
+## 编译
+
+```bash
+# 环境变量设置编译
+GOOS=windows
+GOARCH=amd64
+go build -o myapp main.go
+```
+
+::: code-tabs
+@tab linux编译
+```bash
+cd \path\to\your\project
+set GOOS=linux
+set GOARCH=amd64
+go build -o myapp main.go
+myapp
+```
+
+@tab window编译
+```bash
+$env:GOOS="linux"
+$env:GOARCH="amd64"
+go build -o myapp main.go
+```
+
+:::
