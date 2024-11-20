@@ -3,11 +3,15 @@ title: Golang语言学习
 createTime: 2024/11/14 10:21:26
 permalink: /技术栈/jdiz5gnp/
 ---
+
 ## 安装环境
 
 [go 语言编程环境下载](https://go.dev/dl/)
 使用编程工具为 goland 2021 2.2
 目前安装的是 1.20.3 版本
+
+
+
 ![[img/Pasted image 20230415165551.png]]
 安装会自动配置环境变量指向 bin 目录，同时会自动生成 GOPATH,需要修改这个变量，这个变量是你下的依赖包安装的目录，默认是用户目录需要修改
 ![[img/Pasted image 20230415165646.png]]
@@ -23,27 +27,6 @@ GO111MODULE 是一个开关，通过它可以开启或关闭 go mod 模式。
 3)GO111MODULE=auto，当项目在$GOPATH/src 外且项目根目录有 go.mod 文件时，自动开启模块支持。
 
 ## 基本库中文文档 <https://studygolang.com/pkgdoc>
-
-## GO 基础命令
-
-```bash
-# 在项目目录执行会生成对应项目的go.mod文件，用于管理依赖包
-go mod init hello
-# 会删除掉执行其它命令时产生的一些文件和目录
-go clean
-# 编译
-go build `指定编译目录 go build -o output/myapp.exe .`
-# 运行
-go run
-# 使用 go mod 并安装go依赖包
-go generate
-
-// 交叉编译
-SET GOOS=linux // 目标平台是linux windows
-SET GOARCH=amd64 // 目标处理器架构是amd64
-
-
-```
 
 ## 引用类型和值类型
 

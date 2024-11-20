@@ -145,7 +145,7 @@ func main() {
 	// 设置日志的输出目标为文件
 	log.SetOutput(file)
 	// 设置日志的输出目标为文件和标准输出（控制台）
-	`log.SetOutput(io.MultiWriter(file, os.Stdout))`
+	log.SetOutput(io.MultiWriter(file, os.Stdout))
 
 	// 设置日志的输出格式
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
