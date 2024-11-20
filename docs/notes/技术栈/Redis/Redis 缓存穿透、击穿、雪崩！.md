@@ -3,6 +3,7 @@ title: Redis 缓存穿透、击穿、雪崩！
 createTime: 2024/11/14 10:21:26
 permalink: /技术栈/tswo46tq/
 ---
+
 ​![](https://image.oyyp.top/img/20241103133408.png)​
 
 ## 缓存雪崩
@@ -21,17 +22,17 @@ permalink: /技术栈/tswo46tq/
 
 ### 解决方案
 
-缓存过期时间分散化：
+- 缓存过期时间分散化：
 
-- 可以为不同的缓存键设置不同的失效时间（TTL），使得缓存的过期时间均匀分布，避免大量缓存同时失效。例如，在设定 TTL 时，加上一个随机值，避免缓存键在同一时间失效。
+  - 可以为不同的缓存键设置不同的失效时间（TTL），使得缓存的过期时间均匀分布，避免大量缓存同时失效。例如，在设定 TTL 时，加上一个随机值，避免缓存键在同一时间失效。
 
   Redis 失效时间加上随机数，是一种比较取巧的解决方案。在一定程度上减轻了 DB 的瞬时压力，但是这种方案也在一定程度上增加了维护的成本。
 
-  ```java
-  // 设置缓存时，加一个随机时间，防止集中过期
-  int randomTTL = ttl + new Random().nextInt(100);
-  redisTemplate.opsForValue().set(key, value, randomTTL, TimeUnit.SECONDS);
-  ```
+```java
+// 设置缓存时，加一个随机时间，防止集中过期
+int randomTTL = ttl + new Random().nextInt(100);
+redisTemplate.opsForValue().set(key, value, randomTTL, TimeUnit.SECONDS);
+```
 
 - 缓存预热：
 
@@ -63,31 +64,33 @@ permalink: /技术栈/tswo46tq/
   - 比如我们可以将某个 key 的缓存时间设置为 25 小时，然后后台有个 JOB 每隔 24 小时就去批量刷新一下热点数据。就可以解决这个问题了。
 - 互斥锁（Mutex）机制：
   - 为了解决在缓存失效瞬间，大量请求同时访问数据库的问题，可以通过加锁机制，保证同一时刻只有一个线程能访问数据库。其他线程需要等待该线程将新数据写入缓存后，再读取缓存。
-  ```java
-  String value = redisTemplate.opsForValue().get(key);
-  if (value == null) {
-      // 获取分布式锁
-      if (redisTemplate.opsForValue().setIfAbsent(lockKey, "lock", 10, TimeUnit.SECONDS)) {
-          try {
-              // Double-check
-              value = redisTemplate.opsForValue().get(key);
-              if (value == null) {
-                  // 查询数据库
-                  value = database.get(key);
-                  // 将结果写入缓存
-                  redisTemplate.opsForValue().set(key, value, ttl, TimeUnit.SECONDS);
-              }
-          } finally {
-              // 释放锁
-              redisTemplate.delete(lockKey);
-          }
-      } else {
-          // 等待锁释放后，再从缓存中读取数据
-          Thread.sleep(100); // 自行调整等待时间
-          value = redisTemplate.opsForValue().get(key);
-      }
-  }
-  ```
+
+```java
+String value = redisTemplate.opsForValue().get(key);
+if (value == null) {
+    // 获取分布式锁
+    if (redisTemplate.opsForValue().setIfAbsent(lockKey, "lock", 10, TimeUnit.SECONDS)) {
+        try {
+            // Double-check
+            value = redisTemplate.opsForValue().get(key);
+            if (value == null) {
+                // 查询数据库
+                value = database.get(key);
+                // 将结果写入缓存
+                redisTemplate.opsForValue().set(key, value, ttl, TimeUnit.SECONDS);
+            }
+        } finally {
+            // 释放锁
+            redisTemplate.delete(lockKey);
+        }
+    } else {
+        // 等待锁释放后，再从缓存中读取数据
+        Thread.sleep(100); // 自行调整等待时间
+        value = redisTemplate.opsForValue().get(key);
+    }
+}
+```
+
 - 预防性缓存更新：
   - 在热点数据即将过期时，提前异步刷新缓存。通过检测热点数据的访问频率，当即将过期时触发自动更新操作，避免过期瞬间的击穿问题。
 - 双缓存机制：
@@ -110,23 +113,27 @@ permalink: /技术栈/tswo46tq/
 
 - 缓存空结果：
   - 如果查询的某个键在数据库中不存在，则将该键的查询结果（如 null​ 或空值）缓存起来，并设定一个较短的过期时间，防止该键反复查询打到数据库。
-  ```java
-  // 查询缓存
-  String value = redisTemplate.opsForValue().get(key);
-  if (value == null) {
-      // 查询数据库
-      value = database.get(key);
-      if (value == null) {
-          // 缓存空结果，避免缓存穿透
-          redisTemplate.opsForValue().set(key, "null", 5, TimeUnit.MINUTES);
-      } else {
-          // 将数据库中的值写入缓存
-          redisTemplate.opsForValue().set(key, value, ttl, TimeUnit.SECONDS);
-      }
-  }
-  ```
+
+```java
+// 查询缓存
+String value = redisTemplate.opsForValue().get(key);
+if (value == null) {
+    // 查询数据库
+    value = database.get(key);
+    if (value == null) {
+        // 缓存空结果，避免缓存穿透
+        redisTemplate.opsForValue().set(key, "null", 5, TimeUnit.MINUTES);
+    } else {
+        // 将数据库中的值写入缓存
+        redisTemplate.opsForValue().set(key, value, ttl, TimeUnit.SECONDS);
+    }
+}
+```
+
 - 布隆过滤器（Bloom Filter）：
+
   - 使用布隆过滤器对所有可能存在的数据进行标记，所有请求先经过布隆过滤器进行校验，只有布隆过滤器认为存在的数据，才会去查询缓存或数据库。这样可以有效拦截掉绝大多数不存在的请求，防止这些请求绕过缓存直接打到数据库。
+
   ```java
   BloomFilter bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charset.forName("UTF-8")), 100000);
 
@@ -140,5 +147,6 @@ permalink: /技术栈/tswo46tq/
   }
   // 正常查询缓存和数据库
   ```
+
 - 参数校验：
   - 在查询请求进入系统前，进行严格的参数校验和过滤，避免不合法的请求进入系统。例如用户 ID 或商品 ID 是否符合格式要求，避免恶意构造的非法请求直接打到数据库。

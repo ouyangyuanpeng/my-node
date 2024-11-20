@@ -3,6 +3,7 @@ title: Rust语法
 createTime: 2024/11/14 10:21:26
 permalink: /技术栈/m9ph5i95/
 ---
+
 ## 声明变量类型
 
 Rust 是强类型语言，但具有自动判断变量类型的能力，rust 默认的变量值是不能修改的
@@ -54,7 +55,8 @@ fn add(a: i32, b: i32) -> i32 {
 ```
 
 引用内存结构
-![[img/Pasted image 20230323142552.png]]
+
+![](https://image.oyyp.top/img/202411201632619.png)
 
 ## 所有权规则
 

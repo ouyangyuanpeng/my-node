@@ -10,11 +10,14 @@ permalink: /技术栈/jdiz5gnp/
 使用编程工具为 goland 2021 2.2
 目前安装的是 1.20.3 版本
 
+![Pasted image 20230415165551.png](https://image.oyyp.top/img/202411201634379.png)
 
 
-![[img/Pasted image 20230415165551.png]]
 安装会自动配置环境变量指向 bin 目录，同时会自动生成 GOPATH,需要修改这个变量，这个变量是你下的依赖包安装的目录，默认是用户目录需要修改
-![[img/Pasted image 20230415165646.png]]
+
+![Pasted image 20230415165646.png](https://image.oyyp.top/img/202411201635019.png)
+
+
 
 // 设置自动监测包
 go env -w GO111MODULE=on
