@@ -15,7 +15,7 @@ export default defineThemeConfig({
 
   profile: {
     avatar: 'https://theme-plume.vuejs.press/plume.png',
-    name: '我的学习笔记',
+    name: '学习笔记',
     description: '学习笔记',
     // circle: true,
     // location: '',
