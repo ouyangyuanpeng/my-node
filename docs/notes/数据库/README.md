@@ -3,4 +3,11 @@ title: 数据库
 createTime: 2024/11/14 10:31:17
 permalink: /数据库/
 ---
-[参考](https://ouyangyuanpeng.github.io/mysql-book)
+
+[参考文档](https://ouyangyuanpeng.github.io/mysql-book)
+
+[Mysql 安装](./Mysql安装.md)
+[Mysql 命令](./Mysql安装.md)
+[Mysql索引](./Mysql索引.md)
+[Mysql锁](./Mysql锁.md)
+[InnoDB](./InnoDB.md)
