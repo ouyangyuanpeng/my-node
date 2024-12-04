@@ -13,40 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "技术栈/Redis/Redis过期策略.md",
+                "file": "技术栈/Android/Android Studio.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Redis过期策略"
-            }
-          },
-          {
-            "id": "1f425d4363a64256",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "技术栈/Redis/Redis 缓存穿透、击穿、雪崩！.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Redis 缓存穿透、击穿、雪崩！"
-            }
-          },
-          {
-            "id": "d2611a6bc48b07ee",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "技术栈/Golang/Golang命令.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Golang命令"
+              "title": "Android Studio"
             }
           }
         ]
@@ -150,11 +122,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "技术栈/Redis/Redis分布式锁.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "Redis分布式锁 的出链列表"
             }
           },
           {
@@ -176,10 +149,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "技术栈/Redis/Redis过期策略.md"
+                "file": "技术栈/Android/Android Studio.md"
               },
               "icon": "lucide-list",
-              "title": "Redis过期策略 的大纲"
+              "title": "Android Studio 的大纲"
             }
           },
           {
@@ -215,11 +188,15 @@
   },
   "active": "e241202de15854e3",
   "lastOpenFiles": [
-    "技术栈/Redis/Redis 缓存穿透、击穿、雪崩！.md",
-    "技术栈/Redis/Redis过期策略.md",
+    "技术栈/Android/安卓模拟器和签名证书.md",
     "技术栈/Redis/Redis分布式锁.md",
+    "技术栈/Redis/Redis分布式.md",
     "技术栈/Redis/Redis集群搭建.md",
+    "技术栈/Redis/Redis 缓存穿透、击穿、雪崩.md",
     "技术栈/Redis/Redis数据结构.md",
+    "技术栈/Redis/Redis和数据库一致性问题.md",
+    "[Home.md",
+    "技术栈/Redis/Redis过期策略.md",
     "技术栈/Golang/Golang命令.md",
     "markdown语法.md",
     "技术栈/Java/Java多线程.md",
@@ -241,10 +218,6 @@
     "数据库/Mysql/Mysql安装.md",
     "技术栈/消息队列/RocketMQ.md",
     "技术栈/Typescript.md",
-    "技术栈/README.md",
-    "Linux/Ubuntu20安装.md",
-    "Linux/README.md",
-    "Linux/Linux命令.md",
     "开源框架/前端/img/Pasted image 20231017160909.png",
     "开源框架/前端/img/Pasted image 20231017155733.png",
     "算法/未命名.canvas",

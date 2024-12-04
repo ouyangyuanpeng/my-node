@@ -83,3 +83,6 @@ adb push local remote
 将 和 替换为 开发计算机（本地）和 设备（远程）。例如：` local``remote `
 
 adb push myfile.txt /sdcard/myfile.txt
+
+
+adb install -r apk目录
