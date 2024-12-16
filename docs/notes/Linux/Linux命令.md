@@ -120,6 +120,32 @@ netstat -tuln | grep 8080
 
 ```
 
+## systemctl管理服务
+
+```bash
+
+service-name：服务名称
+
+systemctl start service-name
+
+systemctl stop service-name
+
+systemctl restart service-name
+
+systemctl status service-name
+
+#启用服务开机自启
+systemctl enable service-name
+
+#禁用服务开机自启
+systemctl disable service-name
+
+# 修改service-name.service后刷新 重新加载systemd配置以使更改生效
+
+systemctl daemon-reload
+
+```
+
 ## 文件
 
 ```bash

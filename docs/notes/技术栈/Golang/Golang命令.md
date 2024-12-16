@@ -24,6 +24,8 @@ go build `指定编译目录 go build -o output/myapp.exe .`
 ## 编译
 
 ```bash
+# 使用gcc或者是musl-gcc
+CC=musl-gcc
 # 环境变量设置编译
 GOOS=windows // 目标平台是linux windows
 GOARCH=amd64 // 目标处理器架构是amd64

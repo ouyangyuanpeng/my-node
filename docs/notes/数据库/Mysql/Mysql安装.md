@@ -224,6 +224,7 @@ sudo -u mysql bash -c '/home/oyyp/db/mysql/bin/mysqld --defaults-file=/home/oyyp
 
 参考：[MySQL ：： MySQL 安全部署指南 ：： 5 安装后设置](https://dev.mysql.com/doc/mysql-secure-deployment-guide/8.0/en/secure-deployment-post-install.html#secure-deployment-systemd-startup)
 
+创建：mysqld.service，文件内容如下：
 ```
 [Unit]
 Description=MySQL Community Server
@@ -239,6 +240,49 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+```
+
+```
+# [Unit] 部分定义了服务的基本信息以及它与其他单元的关系。
+[Unit]
+Description=MySQL Server  # 对服务的一个简短描述。
+Documentation=man:mysqld(8)  # 指向手册页中的 mysqld 命令文档。
+Documentation=http://dev.mysql.com/doc/refman/en/using-systemd.html  # 指向 MySQL 官方在线文档关于使用 systemd 的部分。
+After=network.target  # 确保 MySQL 在网络服务启动之后开始。
+After=syslog.target  # 确保 MySQL 在系统日志服务启动之后开始。
+
+# [Install] 部分定义了当该服务被启用时应该如何处理。
+[Install]
+WantedBy=multi-user.target  # 当系统进入多用户模式（非图形界面）时，此服务应被激活。
+
+# [Service] 部分定义了如何控制和管理服务。
+[Service]
+User=mysql  # 使用 'mysql' 用户运行 MySQL 服务，提高安全性。
+Group=mysql  # 使用 'mysql' 组运行 MySQL 服务，提高安全性。
+
+# Have mysqld write its state to the systemd notify socket
+Type=notify  # 设置为 notify 类型，以便 mysqld 可以通过 systemd 的通知套接字告知其状态变化。
+
+# Disable service start and stop timeout logic of systemd for mysqld service.
+TimeoutSec=0  # 禁用启动和停止超时逻辑，不限制 MySQL 启动或停止的时间。
+
+# Start main service
+ExecStart=/usr/local/mysql/bin/mysqld --defaults-file=/etc/my.cnf $MYSQLD_OPTS  # 启动 MySQL 服务的命令，使用 /etc/my.cnf 作为默认配置文件，并允许传递额外选项。
+
+# Use this to switch malloc implementation
+EnvironmentFile=-/etc/sysconfig/mysql  # 引入环境变量文件，如果文件不存在则不报错。
+
+# Sets open_files_limit
+LimitNOFILE = 10000  # 设置 MySQL 进程的最大打开文件数限制。
+
+Restart=on-failure  # 如果服务非正常退出，则自动重启服务。
+
+RestartPreventExitStatus=1  # 如果服务退出状态码为 1，则不触发自动重启。
+
+# Set environment variable MYSQLD_PARENT_PID. This is required for restart.
+Environment=MYSQLD_PARENT_PID=1  # 设置环境变量 MYSQLD_PARENT_PID，可能对于正确重启服务是必要的。
+
+PrivateTmp=false  # 不为 MySQL 创建独立的临时文件系统，使用系统的全局临时目录。
 ```
 
 - ​ExecStart​: 启动 MySQL 服务的命令。

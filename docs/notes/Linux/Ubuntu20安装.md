@@ -171,3 +171,9 @@ sudo passwd root
 
 开启 root 远程登录，可以参考，把 vi 替换为 vim  
 Debian12 安装#开启 root 远程
+
+### 环境变量
+
+vim /etc/environment
+
+source /etc/environment

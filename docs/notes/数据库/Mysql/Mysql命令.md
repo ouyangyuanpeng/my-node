@@ -6,7 +6,7 @@ permalink: /数据库/q4ixe7t0/
 ## 连接 mysql
 
 ```sh
-# 注意，如果是连接到另外的机器上，则需要加入一个参数-h机器IP
+# 注意，如果是连接到另外的机器上，则需要加入一个参数-h机器IP --socket 指定mysql.sock目录
 mysql -h <hostname> -P <port> -u<username> -p密码
 
 mysql -h 192.168.1.100 -P 9306 -uroot -proot
