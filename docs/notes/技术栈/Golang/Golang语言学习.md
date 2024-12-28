@@ -339,6 +339,11 @@ func array1(a []int ){
    a[0] = 100
 }
 
+// 如果参数相同类型可以不用一个一个声明类型，只需要在最后声明
+func b(a, b int)  int {
+   return a+b
+}
+
 // 定义返回变量为 ret (返回名称)
 func a(a int, b int) (ret int) {
    ret = a+b

@@ -33,6 +33,79 @@ cd /usr/local/bin
 
 ```
 
+## 主从搭建
+
+主：负责写请求
+
+从： 负责读请求
+
+配置文件方式：
+
+```
+# slave节点配置文件添加
+slaveof 192.168.1.100 6379
+
+# 主服务器设置了密码保护，从服务器也需要配置 masterauth 指令来进行认证
+masterauth pasword
+
+```
+
+命令行方式：
+
+```bash
+redis-server --slaveof <master-ip> <master-port> --masterauth <master-password>
+```
+
+## 主从数据同步原理
+
+### 全量同步
+
+💡 主从第一次同步是全量同步
+
+master 如何判断 slave 是不是第一次来同步数据？这里会用到两个很重要的概念：
+
+- ReplicationId：简称 replid，是数据集的标记，id 一致则说明是同一数据集。每一个 master 都有唯一的 replid，slave 则会继承 master 节点的 replid
+- offset：偏移量，随着记录在 repl_baklog 中的数据增多而逐渐增大。slave 完成同步时也会记录当前同步的 offset。如果 slave 的 offset 小于 master 的 offset，说明 slave 数据落后于 master，需要更新。
+  因此 slave 做数据同步，必须向 master 声明自己的 replicationid 和 offset，master 才可以判断到底需要同步哪些数据
+
+![image.png](https://image.oyyp.top/img/202412221452771.png)
+
+1.1：步骤中 slave 会带上自己 replid 和 offset 给 master
+1.2：master 判断是否是第一次同步，slave 的 replid 和 master 的 replid 不一致就是第一次同步
+1.3：是第一次的话返回 master 的 replid 和 offset
+1.4：slave 保存 1.3 的 replid 和 offset
+
+repl_baklog: 他是一个命令缓冲区，在同步过程中的写命令会保存在这个缓冲区中
+
+### 增量同步
+
+主从第一次同步是全量同步，如果 slave 宕机重启后，就是增量同步
+
+基于 repl_baklog 进行增量同步：
+
+```
+repl_baklog底层其实是一个类似数组的结构，有固定大小，当命令写满了这个数组的时候，有新的数据需要写入，那么他就会从头开始覆盖原来的数据
+1. repl_baklog类似一个环，环满了就一直重复写入，覆盖之前的数据
+```
+
+slave 在同步的时候会带 offset，master 节点通过这个判断哪些数据没有同步，master 节点的 offset 其实是记录了 repl_baklog 的最新写入的数据的下标，master 通过比较 slave 的 offset 判断哪些数据需要同步
+
+因为 repl_baklog 的大小有上限，所以如果 slave 节点宕机太久，导致需要同步的被覆盖，导致数据增量失败，这个时候只能`全量同步`
+
+### 优化
+
+全量同步优化：
+
+- master 中配置 repl-diskless-sync yes 启用无磁盘复制，避免全量同步时的磁盘 iO。
+- redis 单节点上的内存占用不要太大，如果太大生成的 rdb 文件过大，导致写入到本地 rdb 文件过多磁盘 IO
+- 限制一个 master 上的 slave 节点数量，如果实在是太多 slave，则可以采用主-从-从链式结构，减少 master 压力
+
+![image.png](https://image.oyyp.top/img/202412221521496.png)
+
+增量同步优化：
+
+- 适当提高 repl_baklog 的大小，发现 slave 岩机时尽快实现故障恢复，尽可能避免全量同步
+
 ## 搭建集群
 
 mkdir -p /usr/local/redis-cluster

@@ -8,45 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e241202de15854e3",
+            "id": "00b863498970f399",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "数据库/Mysql/Mysql命令.md",
+                "file": "算法/算法开始.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Mysql命令"
+              "title": "算法开始"
             }
           },
           {
-            "id": "619b55b1303c5e9c",
+            "id": "6f5529997aab5b65",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "数据库/Mysql/Mysql安装.md",
+                "file": "技术栈/SpringBoot/Springboot.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Mysql安装"
-            }
-          },
-          {
-            "id": "2e9c0c2a5407afda",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Docker/Docker容器部署.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Docker容器部署"
+              "title": "Springboot"
             }
           }
         ],
@@ -81,7 +67,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "基本命令",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -178,10 +164,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "数据库/Mysql/Mysql安装.md"
+                "file": "技术栈/SpringBoot/Springboot.md"
               },
               "icon": "lucide-list",
-              "title": "Mysql安装 的大纲"
+              "title": "Springboot 的大纲"
             }
           },
           {
@@ -196,6 +182,16 @@
               },
               "icon": "lucide-archive",
               "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "62b0559f70bf8862",
+            "type": "leaf",
+            "state": {
+              "type": "code-execute-manage-executors",
+              "state": {},
+              "icon": "command-glyph",
+              "title": "Execution Runtimes"
             }
           }
         ],
@@ -215,34 +211,36 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "619b55b1303c5e9c",
+  "active": "6f5529997aab5b65",
   "lastOpenFiles": [
-    "技术栈/Nginx/Nginx安装部署.md",
+    "技术栈/Android/安卓模拟器和签名证书.md",
+    "技术栈/Android/Android语言.md",
+    "技术栈/Android/Android Studio.md",
     "Docker/Docker容器部署.md",
     "数据库/Mysql/Mysql命令.md",
-    "Linux/Linux命令.md",
-    "数据库/Mysql/Mysql安装.md",
-    "技术栈/Redis/Redis集群搭建.md",
-    "Linux/Ubuntu20安装.md",
-    "技术栈/Flutter/Flutter开发.md",
-    "技术栈/Flutter/Flutter安装环境搭建.md",
-    "技术栈/Flutter/Dart语法.md",
+    "数据库/Mysql/Mysql索引.md",
+    "技术栈/SpringBoot/Springboot.md",
+    "技术栈/SpringBoot/SpringBoot启动流程.md",
+    "技术栈/Redis/Redis主从.md",
+    "技术栈/Redis/Redis持久化.md",
     "算法/算法开始.md",
-    "系统部署/豪车服务部署Docker配置.md",
-    "技术栈/Golang/Golang命令.md",
-    "系统部署/README.md",
-    "[Home.md",
-    "系统部署/Jenkins配置.md",
-    "系统部署/Drone.md",
-    "系统部署/部署遇到的问题.md",
-    "Docker/README.md",
-    "技术栈/Redis/Redis 缓存穿透、击穿、雪崩.md",
-    "技术栈/Redis/Redis过期策略.md",
-    "技术栈/Android/Android Studio.md",
-    "技术栈/Android/安卓模拟器和签名证书.md",
-    "技术栈/Redis/Redis分布式锁.md",
-    "技术栈/Redis/Redis分布式.md",
+    "技术栈/Flutter/Dart语法.md",
+    "技术栈/Flutter/Flutter开发.md",
     "技术栈/Redis/Redis数据结构.md",
+    "未命名.canvas",
+    "未命名 1.canvas",
+    "技术栈/Redis/Redis过期策略.md",
+    "技术栈/Redis/Redis分布式锁.md",
+    "技术栈/Golang/Golang语言学习.md",
+    "技术栈/Golang/Golang命令.md",
+    "数据库/Mysql/Mysql锁.md",
+    "数据库/Mysql/Mysql安装.md",
+    "技术栈/Nginx/Nginx安装部署.md",
+    "技术栈/Redis/Redis 缓存穿透、击穿、雪崩.md",
+    "微服务/ElasticSearch.md",
+    "Linux/Linux命令.md",
+    "Linux/Ubuntu20安装.md",
+    "技术栈/Flutter/Flutter安装环境搭建.md",
     "技术栈/Golang/img/Pasted image 20230415165551.png",
     "技术栈/Golang/img/Pasted image 20230415165646.png",
     "技术栈/Golang/img",
@@ -253,7 +251,6 @@
     "算法",
     "img",
     "技术栈/消息队列",
-    "未命名.canvas",
     "Git",
     "Docker",
     "技术栈/SpringBoot",
@@ -267,7 +264,6 @@
     "数据库/mysql-learning-notes/docs/images/25-01.png",
     "目录.canvas",
     "文件/未命名.canvas",
-    "未命名 2.canvas",
-    "未命名 1.canvas"
+    "未命名 2.canvas"
   ]
 }

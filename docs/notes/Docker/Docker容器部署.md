@@ -39,11 +39,14 @@ docker stop id
 docker rm id
 docker rmi id
 
+# docker构建脚本命令 -t 指定镜像tag -f 指定构建文件 .代表当前目录
+docker build -t sjy/cabinet/admin:1.0.2 -f Dockerfile .
+
 # 批量删除容器镜像
 docker stop $(docker ps -a | grep "Exited" | awk '{print $1 }')  #停止容器
 docker rm $(docker ps -a | grep "Exited" | awk '{print $1 }')     #删除容器
 docker rmi $(docker images -a| grep "none" | awk '{print $3}')    #删除镜像
-
+docker image prune -f #全部none镜像
 
 # 导出 save 命令 -o 指定导出的文件名称
 docker save -o quay_io_coreos_etcd.tar 镜像:tag
