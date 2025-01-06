@@ -65,6 +65,91 @@ make && make install
 
 ```
 
+
+## 配置文件说明
+
+```conf
+location / {
+    # 1. 定义根目录，用于指定请求的文件路径
+    root /var/www/html;
+
+    # 2. 定义默认索引文件，当请求路径为目录时，Nginx 会尝试加载这些文件
+    index index.html index.htm index.php;
+
+    # 3. 启用或禁用目录列表（当请求路径为目录且没有索引文件时）
+    autoindex off; # off 表示禁用目录列表，on 表示启用
+
+    # 4. 设置反向代理，将请求转发到后端服务器
+    proxy_pass http://backend_server;
+
+    # 5. 设置反向代理的请求头
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    # 6. 启用或禁用缓冲（适用于反向代理）
+    proxy_buffering on; # on 表示启用缓冲，off 表示禁用
+
+    # 7. 设置客户端请求体的最大大小（默认 1m）
+    client_max_body_size 10m;
+
+    # 8. 设置客户端请求体的超时时间（默认 60s）
+    client_body_timeout 60s;
+
+    # 9. 设置客户端请求头的超时时间（默认 60s）
+    client_header_timeout 60s;
+
+    # 10. 设置发送响应的超时时间（默认 60s）
+    send_timeout 60s;
+
+    # 11. 启用或禁用 gzip 压缩
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+    # 12. 设置缓存控制头（适用于静态资源）
+    expires 1d; # 缓存 1 天
+
+    # 13. 允许或拒绝特定 IP 访问
+    allow 192.168.1.0/24; # 允许 192.168.1.0/24 网段访问
+    deny all; # 拒绝其他所有 IP 访问
+
+    # 14. 重定向请求到另一个 URL
+    return 301 https://example.com/new-path;
+
+    # 15. 自定义错误页面
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
+
+    # 16. 启用或禁用日志记录
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    # 17. 设置请求速率限制（限流）
+    limit_req zone=one burst=5 nodelay;
+
+    # 18. 设置连接速率限制（限流）
+    limit_conn addr 10;
+
+    # 19. 启用跨域资源共享（CORS）
+    add_header 'Access-Control-Allow-Origin' '*';
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+    add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+
+    # 20. 配置 WebSocket 支持（适用于反向代理）
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "Upgrade";
+
+    # 传递 Range 和 If-Range 请求头 如果你需要支持大文件的分块下载或流媒体播放（如视频），`Range` 和 `If-Range` 头的传递是必要的。
+    proxy_set_header Range $http_range;
+    proxy_set_header If-Range $http_if_range;
+
+    # 禁用重定向修改
+    proxy_redirect off;
+}
+```
+
 # Docker 下的配置文件
 
 ```conf

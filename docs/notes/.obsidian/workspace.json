@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "技术栈/SpringBoot/Springboot.md",
+                "file": "技术栈/Nginx/Nginx安装部署.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Springboot"
+              "title": "Nginx安装部署"
             }
           }
         ],
@@ -164,10 +164,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "技术栈/SpringBoot/Springboot.md"
+                "file": "技术栈/Nginx/Nginx安装部署.md"
               },
               "icon": "lucide-list",
-              "title": "Springboot 的大纲"
+              "title": "Nginx安装部署 的大纲"
             }
           },
           {
@@ -213,19 +213,24 @@
   },
   "active": "6f5529997aab5b65",
   "lastOpenFiles": [
-    "技术栈/Android/安卓模拟器和签名证书.md",
-    "技术栈/Android/Android语言.md",
-    "技术栈/Android/Android Studio.md",
-    "Docker/Docker容器部署.md",
-    "数据库/Mysql/Mysql命令.md",
+    "算法/算法开始.md",
+    "网络/winserver+爱快+openwrt基于hyper-v.md",
     "数据库/Mysql/Mysql索引.md",
+    "数据库/Mysql/Mysql锁.md",
+    "Docker/Docker容器部署.md",
+    "系统部署/Jenkins配置.md",
+    "网络/README.md",
+    "技术栈/Android/Android Studio.md",
+    "技术栈/Android/Android语言.md",
+    "技术栈/Android/安卓模拟器和签名证书.md",
+    "技术栈/Flutter/Flutter开发.md",
+    "技术栈/Flutter/Flutter安装环境搭建.md",
+    "技术栈/Flutter/Dart语法.md",
     "技术栈/SpringBoot/Springboot.md",
+    "数据库/Mysql/Mysql命令.md",
     "技术栈/SpringBoot/SpringBoot启动流程.md",
     "技术栈/Redis/Redis主从.md",
     "技术栈/Redis/Redis持久化.md",
-    "算法/算法开始.md",
-    "技术栈/Flutter/Dart语法.md",
-    "技术栈/Flutter/Flutter开发.md",
     "技术栈/Redis/Redis数据结构.md",
     "未命名.canvas",
     "未命名 1.canvas",
@@ -233,14 +238,9 @@
     "技术栈/Redis/Redis分布式锁.md",
     "技术栈/Golang/Golang语言学习.md",
     "技术栈/Golang/Golang命令.md",
-    "数据库/Mysql/Mysql锁.md",
     "数据库/Mysql/Mysql安装.md",
     "技术栈/Nginx/Nginx安装部署.md",
     "技术栈/Redis/Redis 缓存穿透、击穿、雪崩.md",
-    "微服务/ElasticSearch.md",
-    "Linux/Linux命令.md",
-    "Linux/Ubuntu20安装.md",
-    "技术栈/Flutter/Flutter安装环境搭建.md",
     "技术栈/Golang/img/Pasted image 20230415165551.png",
     "技术栈/Golang/img/Pasted image 20230415165646.png",
     "技术栈/Golang/img",
