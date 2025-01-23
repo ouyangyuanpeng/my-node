@@ -9,6 +9,115 @@ permalink: /Docker/3wlmr4l1/
 
 可参考：豪车服务部署 Docker 配置
 
+## 离线安装
+
+参考官网文档下载上传解压复制
+
+### 启动之前要做的操作
+
+创建 touch /etc/docker/daemon.json
+
+vim /etc/docker/daemon.json
+
+```json
+{
+  "data-root":"/mnt/docker-data",
+  "registry-mirrors": [
+    "https://docker.hpcloud.cloud",
+    "https://docker.m.daocloud.io",
+    "https://docker.unsee.tech",
+    "https://docker.1panel.live",
+    "http://mirrors.ustc.edu.cn",
+    "https://docker.chenby.cn",
+    "http://mirror.azure.cn",
+    "https://dockerpull.org",
+    "https://dockerhub.icu",
+    "https://hub.rat.dev"
+  ],
+}
+```
+
+- registry-mirrors ：镜像仓库可以不用配置
+- data-root docker 数据目录 建议选择较大硬盘
+
+出现错误提示：
+`failed to start daemon: Error initializing network controller: error obtaining controller instance: failed to register "bridge" driver: failed to create NAT chain DOCKER: iptables not found`
+
+需要安装iptables 如果无法安装可以禁用 daemon.json中添加  "iptables": false
+
+如果电脑可以上网使用，按照下面安装
+```bash
+**Debian/Ubuntu**:
+sudo apt-get update
+sudo apt-get install iptables
+
+**CentOS/RHEL**:
+sudo yum install iptables
+```
+
+### systemd管理
+
+```bash
+touch /etc/systemd/system/docker.service
+vim /etc/systemd/system/docker.service
+```
+
+`docker.server`文件内容
+```
+[Unit]
+Description=Docker Application Container Engine
+Documentation=https://docs.docker.com
+After=network-online.target firewalld.service
+Wants=network-online.target
+  
+[Service]
+Type=notify
+# the default is not to use systemd for cgroups because the delegate issues still
+# exists and systemd currently does not support the cgroup feature set required
+# for containers run by docker
+ExecStart=/usr/bin/dockerd -H unix:///var/run/docker.sock --selinux-enabled=false --default-ulimit nofile=65536:65536
+ExecReload=/bin/kill -s HUP $MAINPID
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+# Uncomment TasksMax if your systemd version supports it.
+# Only systemd 226 and above support this version.
+#TasksMax=infinity
+TimeoutStartSec=0
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+# restart the docker process if it exits prematurely
+Restart=on-failure
+StartLimitBurst=3
+StartLimitInterval=60s
+  
+[Install]
+WantedBy=multi-user.target
+
+```
+
+```bash
+
+systemctl daemon-reload
+
+# 开机启动
+systemctl enable docker
+
+# 启动
+sudo systemctl start docker
+
+# 检查 MySQL 服务状态
+sudo systemctl status docker
+
+#禁用开机自启动
+sudo systemctl disable docker
+
+```
+
 # 命令
 
 ```bash
@@ -53,8 +162,6 @@ docker save -o quay_io_coreos_etcd.tar 镜像:tag
 
 # 导入load 命令
 docker load < quay_io_coreos_etcd.tar
-
-
 
 ```
 

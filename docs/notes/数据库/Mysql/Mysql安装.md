@@ -292,7 +292,7 @@ PrivateTmp=false  # 不为 MySQL 创建独立的临时文件系统，使用系�
 # 重新加载 `systemd` 配置
 sudo systemctl daemon-reload
 
-# 启用 MySQL 服务
+# 启用 MySQL 服务开机自启动
 sudo systemctl enable mysql
 
 # 启动 MySQL 服务

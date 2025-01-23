@@ -3,7 +3,57 @@ title: SpringBoot启动流程
 createTime: 2024/11/14 10:21:26
 permalink: /技术栈/ztcc63wt/
 ---
-## 启动整体流程
+
+![image.png](https://image.oyyp.top/img/202501231507789.png)
+
+## @SpringBootApplication
+
+主方法注解
+
+### @SpringBootConfiguration
+
+本质是一个@configuration,容器中的组件，配置类，spring ioc 启动的时候会加载创建这个类
+
+### @EnableAutoConfiguration
+
+开启自动配置
+
+#### @AutoConfigurationPackage
+
+扫描主程序包，加载项目自己的组件
+
+利用 `@Import(AutoConfigurationPackages.Registrar.class)`扫描主程序所在的包和子包的组件
+
+#### @Import(AutoConfigurationImportSelector.class)
+
+加载全部自动配置类
+
+```java
+// 加载方法
+protected AutoConfigurationEntry getAutoConfigurationEntry(AnnotationMetadata annotationMetadata) {
+    if (!isEnabled(annotationMetadata)) {
+       return EMPTY_ENTRY;
+    }
+    AnnotationAttributes attributes = getAttributes(annotationMetadata);
+    // 获取全部自动配置类 扫描全部组件的 META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+    List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes);
+    configurations = removeDuplicates(configurations);
+    Set<String> exclusions = getExclusions(annotationMetadata, attributes);
+    checkExcludedClasses(configurations, exclusions);
+    configurations.removeAll(exclusions);
+    configurations = getConfigurationClassFilter().filter(configurations);
+    fireAutoConfigurationImportEvents(configurations, exclusions);
+    return new AutoConfigurationEntry(configurations, exclusions);
+}
+```
+
+#### @ComponentScan
+
+组件扫描，排除之前扫描到的 配置类和自动配置类
+`@ComponentScan(excludeFilters = { @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),  
+       @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })`
+
+## run 方法启动整体流程
 
 - **创建 ApplicationContext**：`SpringApplication` 会根据传入的主类创建一个适当的 `ApplicationContext` 实例（如 `AnnotationConfigApplicationContext` 或 `ServletWebApplicationContext`）。
 - **准备环境**：它会创建一个 `ConfigurableEnvironment` 实例，加载配置属性，并将其与应用的上下文关联。
@@ -51,10 +101,10 @@ public ConfigurableApplicationContext run(String... args) {
     // 配置无头模式（即没有图形用户界面的模式）
     this.configureHeadlessProperty();
 
-    // 获取一组 SpringApplicationRunListeners，这些监听器会在启动的不同阶段被通知
+    // 获取全部的SpringApplicationRunListeners 监听器，这些监听器会在启动的不同阶段被通知
     SpringApplicationRunListeners listeners = this.getRunListeners(args);
 
-    // 通知所有监听器应用程序正在启动
+    // 调用监听器的starting方法通知所有监听器应用程序正在启动
     listeners.starting(bootstrapContext, this.mainApplicationClass);
 
     ConfigurableApplicationContext context = null;
@@ -353,7 +403,7 @@ private void prepareContext(BootstrapContext bootstrapContext, ConfigurableAppli
 
 通过这些步骤，`prepareContext` 方法确保了 `ApplicationContext` 在被刷新之前已经具备了所有必要的配置和初始化条件。这使得应用能够在启动时正确地初始化和运行。
 
-### 刷新上下文
+### 刷新上下文(刷新 bean)
 
 ```java
 this.refreshContext(context);
@@ -361,66 +411,188 @@ this.refreshContext(context);
 
 **刷新上下文**：`refreshContext` 方法调用了 `ApplicationContext` 的 `refresh()` 方法。这个方法是 Spring 框架的核心方法之一，负责执行一系列的初始化步骤，确保应用上下文处于可运行状态。
 
+```java
+public void refresh() throws BeansException, IllegalStateException {
+    this.startupShutdownLock.lock();
+    try {
+       this.startupShutdownThread = Thread.currentThread();
+
+       StartupStep contextRefresh = this.applicationStartup.start("spring.context.refresh");
+
+       // Prepare this context for refreshing.
+       prepareRefresh();
+
+       // Tell the subclass to refresh the internal bean factory.
+       ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+
+       // Prepare the bean factory for use in this context.
+       prepareBeanFactory(beanFactory);
+
+       try {
+          // Allows post-processing of the bean factory in context subclasses.
+          postProcessBeanFactory(beanFactory);
+
+          StartupStep beanPostProcess = this.applicationStartup.start("spring.context.beans.post-process");
+          // Invoke factory processors registered as beans in the context.
+          invokeBeanFactoryPostProcessors(beanFactory);
+          // Register bean processors that intercept bean creation.
+          registerBeanPostProcessors(beanFactory);
+          beanPostProcess.end();
+
+          // Initialize message source for this context.
+          initMessageSource();
+
+          // Initialize event multicaster for this context.
+          initApplicationEventMulticaster();
+
+          // Initialize other special beans in specific context subclasses.
+          onRefresh();
+
+          // Check for listener beans and register them.
+          registerListeners();
+
+          // Instantiate all remaining (non-lazy-init) singletons.
+          finishBeanFactoryInitialization(beanFactory);
+
+          // Last step: publish corresponding event.
+          finishRefresh();
+       }
+
+       catch (RuntimeException | Error ex ) {
+          if (logger.isWarnEnabled()) {
+             logger.warn("Exception encountered during context initialization - " +
+                   "cancelling refresh attempt: " + ex);
+          }
+
+          // Destroy already created singletons to avoid dangling resources.
+          destroyBeans();
+
+          // Reset 'active' flag.
+          cancelRefresh(ex);
+
+          // Propagate exception to caller.
+          throw ex;
+       }
+
+       finally {
+          contextRefresh.end();
+       }
+    }
+    finally {
+       this.startupShutdownThread = null;
+       this.startupShutdownLock.unlock();
+    }
+}
+```
+
+#### **`refresh()`  方法的作用**
+
+`refresh()`  方法的主要作用是**初始化或刷新 Spring 应用上下文**。它会完成以下任务：
+
+1. **准备上下文**：设置启动时间、激活状态、初始化属性源等。
+2. **创建并配置 Bean 工厂**：加载 Bean 定义（`BeanDefinition`），并对其进行后处理。
+3. **初始化消息源、事件广播器等组件**。
+4. **实例化单例 Bean**：完成 Bean 的依赖注入和初始化。
+5. **发布上下文刷新完成事件**：通知监听器上下文已刷新完成。
+
+---
+
+#### **`refresh()`  方法的执行流程**
+
+以下是  `refresh()`  方法的主要步骤及其作用：
+
+##### 1. **`prepareRefresh()`**
+
+- **作用**：准备刷新上下文。
+- **具体操作**：
+  - 设置上下文的启动时间和激活状态。
+  - 初始化属性源（`PropertySources`）。
+  - 验证必要的环境属性是否已配置。
+
+##### 2. **`obtainFreshBeanFactory()`**
+
+- **作用**：获取或创建 Bean 工厂（`BeanFactory`）。
+- **具体操作**：
+  - 如果是  `AbstractRefreshableApplicationContext`，会销毁现有的 Bean 工厂并创建一个新的。
+  - 加载 Bean 定义（`BeanDefinition`）。
+
+##### 3. **`prepareBeanFactory(beanFactory)`**
+
+- **作用**：配置 Bean 工厂。
+- **具体操作**：
+  - 设置 Bean 工厂的类加载器、表达式解析器、属性编辑器等。
+  - 添加一些内置的 BeanPostProcessor（如  `ApplicationContextAwareProcessor`）。
+
+##### 4. **`postProcessBeanFactory(beanFactory)`**
+
+- **作用**：允许子类对 Bean 工厂进行后处理。
+- **具体操作**：
+  - 子类可以重写此方法，在 Bean 工厂初始化后对其进行自定义配置。
+
+##### 5. **`invokeBeanFactoryPostProcessors(beanFactory)`**
+
+- **作用**：调用所有注册的  `BeanFactoryPostProcessor`。
+- **具体操作**：
+  - 执行  `BeanFactoryPostProcessor`  的  `postProcessBeanFactory()`  方法，用于修改 Bean 定义。
+  - 例如，`ConfigurationClassPostProcessor`  会解析  `@Configuration`  类并注册额外的 Bean 定义
+  - 加载自动配置类，扫描主程序包，加载项目自己的组件
+
+##### 6. **`registerBeanPostProcessors(beanFactory)`**
+
+- **作用**：注册所有的  `BeanPostProcessor`。
+- **具体操作**：
+  - 将  `BeanPostProcessor`  注册到 Bean 工厂中，以便在 Bean 初始化前后执行自定义逻辑。
+
+##### 7. **`initMessageSource()`**
+
+- **作用**：初始化消息源（`MessageSource`）。
+- **具体操作**：
+  - 用于国际化支持，解析消息资源。
+
+##### 8. **`initApplicationEventMulticaster()`**
+
+- **作用**：初始化事件广播器（`ApplicationEventMulticaster`）。
+- **具体操作**：
+  - 用于发布和监听 Spring 事件。
+
+##### 9. **`onRefresh()`**
+
+- **作用**：允许子类在刷新时执行特定的初始化逻辑。
+- **具体操作**：
+  - 例如，在 Spring Boot 中，`onRefresh()`  会启动内嵌的 Web 服务器。
+
+##### 10. **`registerListeners()`**
+
+- **作用**：注册监听器。
+- **具体操作**：
+  - 将所有的  `ApplicationListener`  注册到事件广播器中。
+  - 发布早期事件（如果有）。
+
+##### 11. **`finishBeanFactoryInitialization(beanFactory)`**
+
+- **作用**：完成 Bean 工厂的初始化。
+- **具体操作**：
+  - 实例化所有非懒加载的单例 Bean。
+  - 执行 Bean 的依赖注入、初始化方法（如  `@PostConstruct`）和  `BeanPostProcessor`  的逻辑。
+
+##### 12. **`finishRefresh()`**
+
+- **作用**：完成刷新过程。
+- **具体操作**：
+  - 发布  `ContextRefreshedEvent`  事件，通知监听器上下文已刷新完成。
+  - 初始化生命周期处理器（`LifecycleProcessor`）并启动所有实现了  `Lifecycle`  接口的 Bean。
+
+---
+
+#### **异常处理**
+
+如果在刷新过程中发生异常，`refresh()`  方法会执行以下操作：
+
+1. **销毁已创建的 Bean**：调用  `destroyBeans()`  方法，避免资源泄漏。
+2. **取消刷新**：调用  `cancelRefresh(ex)`，设置上下文状态为未激活。
+3. **抛出异常**：将异常传播给调用者。
+
 作用和功能：
-
-**准备 Bean 工厂**
-
-- **初始化  `BeanFactory`**：这是 Spring 容器的核心，负责管理和创建 Bean。
-- **设置  `BeanFactoryPostProcessor`**：这些后处理器可以在 Bean 定义加载完成后对  `BeanFactory`  进行修改。例如，`PropertySourcesPlaceholderConfigurer`  用于解析占位符。
-
-**注册 Bean 后处理器**
-
-- **注册  `BeanPostProcessor`**：这些处理器可以在 Bean 实例化前后对其进行处理。常见的  `BeanPostProcessor`  包括  `AutowiredAnnotationBeanPostProcessor`（用于处理  `@Autowired`  注解）和  `CommonAnnotationBeanPostProcessor`（用于处理  `@Resource`  注解）。
-
-**初始化消息源**
-
-- **初始化  `MessageSource`**：如果配置了消息源，用于国际化支持。
-
-**初始化应用事件多播器**
-
-- **初始化  `ApplicationEventMulticaster`**：用于广播应用事件。
-
-**初始化单例 Beans**
-
-- **初始化所有非懒加载的单例 Beans**：这是  `refreshContext`  方法中最耗时的部分，因为每个 Bean 都需要实例化、属性填充、初始化方法调用等。
-- **生命周期回调**：在这个过程中，Spring 会调用每个 Bean 的生命周期回调方法，如  `InitializingBean`  接口的  `afterPropertiesSet`  方法和  `@PostConstruct`  注解的方法。
-
-**启动嵌入式 Web 服务器**
-
-- **启动 Web 服务器**：如果应用程序是一个 Web 应用，`refreshContext`  方法会启动嵌入式 Web 服务器（如 Tomcat、Jetty 或 Undertow）。
-- **配置 Servlet 容器**：初始化 Servlet 容器，配置 Servlet、Filter 和 Listener。
-
-**初始化 Web 相关组件**
-
-- **初始化 DispatcherServlet**：这是 Spring MVC 的前端控制器，负责接收和分发 HTTP 请求。
-- **初始化 Handler Mappings**：配置 URL 到 Controller 方法的映射。
-- **初始化 View Resolvers**：配置视图解析器，用于解析视图名称并返回视图对象。
-- **初始化 Exception Handlers**：配置全局异常处理器，用于处理未捕获的异常。
-
-**初始化事务管理器**
-
-- **初始化  `PlatformTransactionManager`**：如果配置了事务管理器，确保事务管理功能可用。
-
-**初始化数据源和 JPA 相关组件**
-
-- **初始化数据源**：配置数据库连接池，如 HikariCP 或 Druid。
-- **初始化 EntityManagerFactory**：如果使用 JPA，初始化 EntityManagerFactory，用于管理实体对象。
-
-**初始化缓存管理器**
-
-- **初始化  `CacheManager`**：如果配置了缓存管理器，确保缓存功能可用。
-
-**初始化定时任务**
-
-- **初始化  `TaskScheduler`**：如果配置了定时任务（如  `@Scheduled`  注解的方法），初始化定时任务调度器，确保定时任务能够正常执行。
-
-**发布  `ContextRefreshedEvent`  事件**
-
-- **发布  `ContextRefreshedEvent`**：通知所有监听器  `ApplicationContext`  已经刷新完毕，应用程序已经准备好处理请求。
-
-**处理自动配置**
-
-- **自动配置**：根据类路径上的依赖自动配置相应的组件和服务。例如，如果检测到 Spring Data JPA，会自动配置数据源和 JPA 相关的 Bean。
 
 ### 启动后的处理
 
