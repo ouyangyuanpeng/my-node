@@ -378,6 +378,31 @@ localhost /api/和/api的区别
 
 /apidev 会匹配到 /api 因为他是已/api开头，不会匹配到/api/
 
+
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name api.edu.sjysz.com;
+    location / {
+        proxy_pass http://127.0.0.1:5840/;
+    }
+    location /test {
+        proxy_pass http://127.0.0.1:5840/;
+    }
+}
+proxy_pass使用 / 结尾那么匹配到的路径不会被添加到proxy_pass后面
+
+比如 http://api.edu.sjysz.com/test/abc 那么实际转发到后台的是http://127.0.0.1:5840/abc
+
+proxy_pass没有使用 / 结尾那么匹配到的路径也会被添加到proxy_pass后面
+
+比如 http://api.edu.sjysz.com/test/abc 那么实际转发到后台的是http://127.0.0.1:5840/test/abc
+
+location 如果是 / 那么不管proxy_pass后面是什么都会匹配完整路径到proxy_pass中
+
+`location /` 会匹配所有请求，但 `proxy_pass` 以 `/` 结尾时，移除的匹配部分（即 `/`）不影响原始路径结构。因此，请求 URI 会被完整传递。
+
 ```
 
 # window 下配置文件

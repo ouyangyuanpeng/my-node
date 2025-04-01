@@ -4,53 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "c9308a48ba2d51cb",
+        "id": "6ef4eba9ea9f9448",
         "type": "tabs",
         "children": [
           {
-            "id": "00b863498970f399",
+            "id": "ca58196fd4c30ab2",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "算法/算法开始.md",
+                "file": "技术栈/SpringBoot/SpringBoot启动流程.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "算法开始"
-            }
-          },
-          {
-            "id": "6f5529997aab5b65",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Docker/Docker容器部署.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Docker容器部署"
-            }
-          },
-          {
-            "id": "560a1c61bee00b53",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "技术栈/SpringBoot/事件监听.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "事件监听"
+              "title": "SpringBoot启动流程"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -69,7 +40,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -178,10 +150,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "技术栈/SpringBoot/事件监听.md"
+                "file": "技术栈/SpringBoot/SpringBoot启动流程.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "事件监听 的大纲"
+              "title": "SpringBoot启动流程 的大纲"
             }
           },
           {
@@ -199,7 +174,7 @@
             }
           },
           {
-            "id": "62b0559f70bf8862",
+            "id": "101e528592e8ca4b",
             "type": "leaf",
             "state": {
               "type": "code-execute-manage-executors",
@@ -225,36 +200,36 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "560a1c61bee00b53",
+  "active": "ca58196fd4c30ab2",
   "lastOpenFiles": [
-    "技术栈/SpringBoot/SpringBoot启动流程.md",
     "技术栈/SpringBoot/事件监听.md",
-    "Linux/Debian12安装.md",
+    "技术栈/SpringBoot/SpringBoot启动流程.md",
+    "技术栈/SpringBoot/Springboot扩展点.md",
     "技术栈/SpringBoot/Springboot.md",
-    "技术栈/SpringBoot/生命周期监听.md",
-    "Docker/Docker容器部署.md",
-    "markdown语法.md",
-    "数据库/Mysql/Mysql安装.md",
+    "技术栈/Rust/Rust语法.md",
+    "技术栈/Redis/Redis主从.md",
+    "技术栈/Redis/Redis数据结构.md",
+    "技术栈/Redis/Redis和数据库一致性问题.md",
+    "技术栈/Redis/Redis过期策略.md",
+    "技术栈/Redis/Redis分布式锁.md",
+    "技术栈/Redis/Redis持久化.md",
+    "技术栈/Redis/Redis 缓存穿透、击穿、雪崩.md",
+    "技术栈/Python/Anaconda.md",
+    "技术栈/Python/语言元素.md",
     "技术栈/Nginx/Nginx安装部署.md",
-    "算法/算法开始.md",
-    "网络/winserver+爱快+openwrt基于hyper-v.md",
-    "数据库/Mysql/Mysql索引.md",
-    "数据库/Mysql/Mysql锁.md",
-    "系统部署/Jenkins配置.md",
-    "网络/README.md",
-    "技术栈/Android/Android Studio.md",
-    "技术栈/Android/Android语言.md",
-    "技术栈/Android/安卓模拟器和签名证书.md",
+    "技术栈/Golang/Golang语言学习.md",
+    "技术栈/Golang/Golang命令.md",
+    "技术栈/Golang/Golang常用方法.md",
     "技术栈/Flutter/Flutter开发.md",
     "技术栈/Flutter/Flutter安装环境搭建.md",
     "技术栈/Flutter/Dart语法.md",
-    "数据库/Mysql/Mysql命令.md",
-    "技术栈/Redis/Redis主从.md",
-    "技术栈/Redis/Redis持久化.md",
-    "技术栈/Redis/Redis数据结构.md",
+    "技术栈/Android/Android语言.md",
+    "技术栈/Android/Android Studio.md",
+    "技术栈/Android/安卓模拟器和签名证书.md",
+    "技术栈/消息队列/RocketMQ.md",
+    "markdown语法.md",
     "未命名.canvas",
     "未命名 1.canvas",
-    "技术栈/Redis/Redis过期策略.md",
     "技术栈/Golang/img/Pasted image 20230415165551.png",
     "技术栈/Golang/img/Pasted image 20230415165646.png",
     "技术栈/Golang/img",

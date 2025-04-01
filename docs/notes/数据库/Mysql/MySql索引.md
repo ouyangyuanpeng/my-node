@@ -4,7 +4,6 @@ createTime: 2024/11/14 10:21:26
 permalink: /数据库/ucfmc8vr/
 ---
 参考：[第 6 章 快速查询的秘籍-B+树索引](https://ouyangyuanpeng.github.io/mysql-book/#/mysql/06-%E5%BF%AB%E9%80%9F%E6%9F%A5%E8%AF%A2%E7%9A%84%E7%A7%98%E7%B1%8D-B+%E6%A0%91%E7%B4%A2%E5%BC%95)
-
 ## B+树
 
 ## 聚簇索引

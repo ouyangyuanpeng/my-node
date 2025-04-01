@@ -14,6 +14,5 @@
   "readableLineLength": false,
   "rightToLeft": false,
   "foldIndent": true,
-  "strictLineBreaks": false,
-  "showRibbon": true
+  "strictLineBreaks": false
 }
